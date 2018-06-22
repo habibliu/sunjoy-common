@@ -1,6 +1,5 @@
 package com.sunjoy.common.auth.service.impl;
 
-import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,10 +13,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class SecurityServiceImplTest {
 	protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	@Test
-	public void testLoadUserByUsername() {
-		fail("Not yet implemented");
-	}
 
 	@Test
 	public void testPasswordEncode() {

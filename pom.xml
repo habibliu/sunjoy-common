@@ -78,7 +78,7 @@
 		</repository>
 	</repositories>
 
-
+	<!-- 
 	<distributionManagement>
 		<repository>
 			<id>nexus-releases</id>
@@ -90,4 +90,5 @@
 			<url>http://192.168.0.237:8081/nexus/content/repositories/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
+	 -->
 </project>

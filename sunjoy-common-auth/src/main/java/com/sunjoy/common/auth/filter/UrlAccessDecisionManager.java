@@ -26,7 +26,8 @@ public class UrlAccessDecisionManager implements AccessDecisionManager {
 			String needRole = ca.getAttribute();
 			if ("ROLE_LOGIN".equals(needRole)) {
 				if (authentication instanceof AnonymousAuthenticationToken) {
-					throw new BadCredentialsException("未登录");
+					//throw new BadCredentialsException("未登录");
+					return;
 				} else
 					return;
 			}
