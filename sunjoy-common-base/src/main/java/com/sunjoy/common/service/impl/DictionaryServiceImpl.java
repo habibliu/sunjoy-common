@@ -36,7 +36,24 @@ public class DictionaryServiceImpl implements IDictionaryService{
 
 	private List<Dictionary>  getSchools(){
 		List<Dictionary> dictionaries=new ArrayList<Dictionary>();
-		
+		String[] hightSchool={"新塘中学","增城中学","郑中均中学"};
+		String[] middleSchools= {"菊泉中学","新塘一中","新塘二中","新塘三中"};
+		for(int i=0;i<hightSchool.length;i++){
+			Dictionary dict=new Dictionary();
+			dict.setItemCode("HS"+String.valueOf(i+1));
+			dict.setItemName(hightSchool[i]);
+			dict.setTypeCode("SCHOOL");
+			dict.setTypeName("学校");
+			dictionaries.add(dict);
+		}
+		for(int i=0;i<middleSchools.length;i++){
+			Dictionary dict=new Dictionary();
+			dict.setItemCode("MS"+String.valueOf(i+1));
+			dict.setItemName(middleSchools[i]);
+			dict.setTypeCode("SCHOOL");
+			dict.setTypeName("学校");
+			dictionaries.add(dict);
+		}
 		return dictionaries;
 	}
 	
@@ -50,6 +67,7 @@ public class DictionaryServiceImpl implements IDictionaryService{
 			dict.setItemName(items[i]);
 			dict.setTypeCode("COURSE-GRADE");
 			dict.setTypeName("课程等级");
+			dictionaries.add(dict);
 		}
 		return dictionaries;
 	}
@@ -63,6 +81,7 @@ public class DictionaryServiceImpl implements IDictionaryService{
 			dict.setItemName(items[i]);
 			dict.setTypeCode("COURSE-PHASE");
 			dict.setTypeName("课程阶段");
+			dictionaries.add(dict);
 		}
 		return dictionaries;
 	}
