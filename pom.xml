@@ -31,6 +31,7 @@
 		<!-- 通用工具包版本设置 -->
 		<commons-lang3.version>3.4</commons-lang3.version>
 		<guava.version>19.0</guava.version>
+		
 	</properties>
 
 	<dependencyManagement>
@@ -39,6 +40,8 @@
 				<groupId>com.sunjoy.framework</groupId>
 				<artifactId>sunjoy-framework-service</artifactId>
 				<version>${sunjoy.framework.version}</version>
+<!-- 				<scope>system</scope> -->
+<!--     			<systemPath>${project.basedir}/sunjoy-framework/sunjoy-framework-service/target/sunjoy-framework-service-${version}.jar</systemPath> -->
 			</dependency>
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
@@ -58,8 +61,7 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-
-	<repositories>
+<repositories>
 		<repository>
 			<id>spring-snapshots</id>
 			<name>Spring Snapshots</name>
@@ -77,18 +79,16 @@
 			</snapshots>
 		</repository>
 	</repositories>
-
-	<!-- 
+	
 	<distributionManagement>
 		<repository>
-			<id>nexus-releases</id>
-			<url>http://192.168.0.237:8081/nexus/content/repositories/releases</url>
+			<id>Releases</id>
+			<url>http://localhost:8081/nexus/content/repositories/releases</url>
 		</repository>
 
 		<snapshotRepository>
-			<id>nexus-snapshots</id>
-			<url>http://192.168.0.237:8081/nexus/content/repositories/snapshots</url>
+			<id>Snapshots</id>
+			<url>http://localhost:8081/nexus/content/repositories/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
-	 -->
 </project>

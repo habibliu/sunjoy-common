@@ -20,6 +20,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -28,8 +29,8 @@ import com.sunjoy.common.auth.filter.AuthenticationAccessDeniedHandler;
 import com.sunjoy.common.auth.filter.UrlAccessDecisionManager;
 import com.sunjoy.common.auth.filter.UrlFilterInvocationSecurityMetadataSource;
 import com.sunjoy.common.auth.service.ISecurityService;
-import com.sunjoy.common.utils.JsonUtil;
 import com.sunjoy.framework.client.dto.Response;
+import com.sunjoy.framework.utils.JsonUtil;
 
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
