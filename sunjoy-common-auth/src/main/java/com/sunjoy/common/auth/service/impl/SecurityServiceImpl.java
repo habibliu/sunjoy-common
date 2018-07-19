@@ -1,5 +1,7 @@
 package com.sunjoy.common.auth.service.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,6 +15,7 @@ import com.sunjoy.common.auth.service.ISecurityService;
 @Service(value = "securityService")
 @Transactional
 public class SecurityServiceImpl implements ISecurityService{
+	protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	private UserDao userDao;
 
@@ -20,8 +23,9 @@ public class SecurityServiceImpl implements ISecurityService{
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user=userDao.getUserByUsername(username);
 		if(user==null) {
-			throw new UsernameNotFoundException("用户不存在！");
+			throw new UsernameNotFoundException("用户["+username+"]不存在！");
 		}
+		logger.info("登录用户存在:{}",user);
 		//todo,补充用户角色
 		return user;
 	}
