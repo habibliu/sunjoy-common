@@ -1,5 +1,7 @@
 package com.sunjoy.common.auth.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -35,6 +37,7 @@ import com.sunjoy.framework.utils.JsonUtil;
 
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+	protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	ISecurityService securityService;
 	@Autowired
@@ -115,6 +118,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 							HttpServletResponse httpServletResponse,
 							Authentication authentication) throws IOException,
 							ServletException {
+						logger.debug("用户[{}]登录成功！",authentication.getPrincipal());
 						httpServletResponse
 								.setContentType("application/json;charset=utf-8");
 						PrintWriter out = httpServletResponse.getWriter();
