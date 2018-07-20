@@ -12,13 +12,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 @Configuration
 public class CorsConfig extends WebMvcConfigurerAdapter {
-	@Override  
-    public void addCorsMappings(CorsRegistry registry) {  
-        registry.addMapping("/**")  
-                .allowedOrigins("*")
-                .allowCredentials(true)  
-                .allowedMethods("GET", "POST", "DELETE", "PUT")  
-                .maxAge(3600);
-    }  
+	@Override
+	public void addCorsMappings(CorsRegistry registry) {
+		registry.addMapping("/**")
+				.allowedOrigins("*")
+				.allowCredentials(true)
+				.allowedHeaders("X-Requested-With", "Content-Type", "Accept",
+						"Authorization", "Origin", "Pragma",
+						"Access-Control-Allow-Headers","Cache-Control","FrontType")
+				.allowedMethods("*").maxAge(3600);
+	}
 
 }
