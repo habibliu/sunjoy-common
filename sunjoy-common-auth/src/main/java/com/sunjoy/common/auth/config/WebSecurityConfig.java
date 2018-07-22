@@ -4,13 +4,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,6 +21,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.web.cors.CorsUtils;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
 import javax.servlet.ServletException;
@@ -36,6 +40,7 @@ import com.sunjoy.framework.client.dto.Response;
 import com.sunjoy.framework.utils.JsonUtil;
 
 @Configuration
+@EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired
@@ -64,6 +69,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		
 		http.authorizeRequests()
 				.withObjectPostProcessor(
 						new ObjectPostProcessor<FilterSecurityInterceptor>() {
@@ -75,7 +81,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 								return o;
 							}
 						})
-				.antMatchers("/")////允许所有用户访问"/"
+				.antMatchers("/login","**","/**")////允许所有用户访问"/"
 				.permitAll()
 				.and()
 				.formLogin()
@@ -129,7 +135,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 						out.flush();
 						out.close();
 					}
-				}).and().logout().permitAll().and().csrf().disable()
+				}).and().logout().permitAll().and().cors().and().csrf().disable()
 				.exceptionHandling()
 				.accessDeniedHandler(authenticationAccessDeniedHandler);
 		
