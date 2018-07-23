@@ -47,6 +47,10 @@ public class User extends BaseEntity implements UserDetails {
 		return this.username;
 	}
 
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
 	@Override
 	public boolean isAccountNonExpired() {
 		return true;

@@ -25,33 +25,18 @@ public class CorsFilter implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
 		//String origin = request.getHeader(ORIGIN);	
-		if (request.getHeader(HttpHeaders.ORIGIN) != null)
-        {
-	        response.setHeader("Access-Control-Allow-Origin", request.getHeader(HttpHeaders.ORIGIN));//* or origin as u prefer
+		//if (request.getHeader(HttpHeaders.ORIGIN) != null)
+        //{
+	        response.setHeader("Access-Control-Allow-Origin", "*");//* or origin as u prefer
 	        response.setHeader("Access-Control-Allow-Credentials", "true");
 	        response.setHeader("Access-Control-Allow-Methods", "PUT, POST, GET, OPTIONS, DELETE");
 	        response.setHeader("Access-Control-Max-Age", "3600");
 	        response.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization,Pragma,Cache-Control");
-        }
+        //}
         if (request.getMethod().equals("OPTIONS")){
             response.setStatus(HttpServletResponse.SC_OK);
         }
-        System.out.println("---------------拦截器开始------------------");
-        try{
-            response.setHeader("Content-type", "application/json;charset=UTF-8");
-
-            String requestMethord = request.getRequestURI();//请求方法
-            if(requestMethord==null){
-                return false;
-            }
-
-            //获取请求参数
-            JSONObject parameterMap = JSON.parseObject(new BodyReaderHttpServletRequestWrapper(request).getBodyString(request));
-            String dataFrom = String.valueOf(parameterMap.get("dataFrom")); 
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        
 		return true;
 	}
 
