@@ -21,8 +21,12 @@ public class SecurityServiceImpl implements ISecurityService{
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		
+		logger.debug("用户[{}]正在登录！",username);
+		username="admin";
 		User user=userDao.getUserByUsername(username);
 		if(user==null) {
+			logger.error("用户[{}]不存在!",user);
 			throw new UsernameNotFoundException("用户["+username+"]不存在！");
 		}
 		logger.info("登录用户存在:{}",user);
