@@ -10,12 +10,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  * @author liuganchao<740033486@qq.com>
  * @date 2018年7月19日
  */
-
+@Configuration
 public class CorsConfig extends WebMvcConfigurerAdapter {
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
 		registry.addMapping("/**").allowedOrigins("*")
-				.allowedHeaders("Origin", "X-Requested-With", "Content-Type", "Accept","Pragma")
+				.allowedHeaders("Origin", "X-Requested-With", "Content-Type", "Accept","Pragma","Cache-Control")
 				.allowCredentials(true)
 				.allowedMethods("*")
 				.maxAge(3600);
@@ -26,7 +26,7 @@ public class CorsConfig extends WebMvcConfigurerAdapter {
 	}
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {  
-        registry.addInterceptor(new CorsFilter());  
+        //registry.addInterceptor(new CorsFilter());  
     }  
 
 }
