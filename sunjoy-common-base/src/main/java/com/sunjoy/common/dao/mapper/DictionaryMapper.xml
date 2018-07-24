@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sunjoy.common.dao.mapper.DictionaryMapper">
+	<sql id="selectFields">
+		dic.id as id,
+		dic.type_code as typeCode,
+		dic.type_name as typeName,
+		dic.item_code as itemCode,
+		dic.item_name as itemName,
+		dic.seq as seq,
+		dic.create_user as createUser,
+		dic.create_time as createTime,
+		dic.update_user as updateUser,
+		dic.update_time as updateTime,
+		dic.status as status
+	</sql>
+	<sql id="insertFields">
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null and id != ''">
+				id,
+			</if>
+			<if test="typeCode != null and typeCode != ''">
+				type_code,
+			</if>
+			<if test="typeName != null and typeName != ''">
+				type_name,
+			</if>
+			<if test="itemCode != null and itemCode != ''">
+				item_code,
+			</if>
+			<if test="itemName != null and itemName != ''">
+				item_name,
+			</if>
+			<if test="seq != null ">
+				seq,
+			</if>
+			
+			<if test="status != null and status != ''">
+				status,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="createUser != null and createUser != ''">
+				create_user,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="updateUser != null and updateUser != ''">
+				update_user,
+			</if>
+			
+		</trim>
+	</sql>
+	<sql id="insertValues">
+		<trim prefix="values(" suffix=")" suffixOverrides=",">
+			<if test="id != null and id != ''">
+				#{id,jdbcType=VARCHAR},
+			</if>
+		
+			<if test="typeCode != null and typeCode != ''">
+				#{typeCode,jdbcType=VARCHAR},
+			</if>
+			<if test="typeName != null and typeName != ''">
+				#{typeName,jdbcType=VARCHAR},
+			</if>
+			<if test="itemCode != null and itemCode != ''">
+				#{itemCode,jdbcType=VARCHAR},
+			</if>
+			<if test="itemName != null and itemName != ''">
+				#{itemName,jdbcType=VARCHAR},
+			</if>
+			<if test="seq != null ">
+				#{seq,jdbcType=INTEGER},
+			</if>
+			
+			<if test="status != null and status != ''">
+				#{status,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createUser != null and createUser != ''">
+				#{createUser,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateUser != null and updateUser != ''">
+				#{updateUser,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</sql>
+	
+	<insert id="insertDictionary">
+		insert into bas.dictionary
+		<include refid="insertFields" />
+		<include refid="insertValues" />
+	</insert>
+	
+	<select id="queryDictionariesByType" resultType="com.sunjoy.common.dao.entity.Dictionary">
+		select <include refid="selectFields"/>
+		from bas.dictionary dic
+		where dic.type_code=#{typeCode}
+		order by dic.seq asc
+	</select>
+	
+	<select id="getMaxItemCode" resultType="java.lang.String">
+		select GREATEST(dic.item_code) as itemCode 
+		from bas.dictionary dic
+		where dic.type_code=#{typeCode}
+	</select>
+	
+	<select id="getMaxSequence" resultType="java.lang.Integer">
+		select GREATEST(dic.seq) as seq 
+		from bas.dictionary dic
+		where dic.type_code=#{typeCode}
+	</select>
+</mapper>

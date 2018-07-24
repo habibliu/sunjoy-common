@@ -1,12 +1,18 @@
 package com.sunjoy.common.service.impl;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sunjoy.common.dao.DictionaryDao;
+import com.sunjoy.common.dao.dto.DictionaryDto;
 import com.sunjoy.common.dao.entity.Dictionary;
 import com.sunjoy.common.service.IDictionaryService;
+import com.sunjoy.framework.utils.BeanUtils;
+import com.sunjoy.framework.utils.RandomUtils;
 
 /**
  *
@@ -15,13 +21,22 @@ import com.sunjoy.common.service.IDictionaryService;
  */
 @Service(value="dictionaryService")
 public class DictionaryServiceImpl implements IDictionaryService{
+	
+	@Autowired
+	private DictionaryDao dictionaryDao;
+	
+	private static NumberFormat numberFormat=NumberFormat.getInstance();
+	{
+		numberFormat.setMinimumIntegerDigits(3);
+		numberFormat.setMaximumIntegerDigits(3);
+	}
 
 	@Override
 	public List<Dictionary> getDictionaries(String typeCode) {
 		List<Dictionary> dictionaries=null;
 		switch(typeCode){
 			case "SCHOOL":
-				dictionaries=getSchools();
+				dictionaries=dictionaryDao.getDictionariesByType(typeCode);
 				break;
 			case "COURSE-GRADE":
 				dictionaries=getCourseGrades();
@@ -84,5 +99,43 @@ public class DictionaryServiceImpl implements IDictionaryService{
 			dictionaries.add(dict);
 		}
 		return dictionaries;
+	}
+
+	@Override
+	public void addDictionary(DictionaryDto dict) {
+		//检验
+		BeanUtils.checkEmptyFields(dict, "typeCode","typeName","itemName");
+		if(BeanUtils.isEmpty(dict.getId())) {
+			dict.setId(RandomUtils.createUUID());
+		}
+		if(BeanUtils.isEmpty(dict.getItemCode())) {
+			//从数据库中取出编号最大的号码+1
+			String maxItemCode=this.dictionaryDao.getMaxItemCode(dict.getTypeCode());
+			if(maxItemCode==null) {
+				maxItemCode="001";
+			}else {
+				Integer maxNo=Integer.parseInt(maxItemCode);
+				maxNo++;
+				maxItemCode=numberFormat.format(maxNo);
+				
+			}
+			dict.setItemCode(maxItemCode);
+		}
+		//取数据中该项目最大序号+1
+		if(BeanUtils.isEmpty(dict.getSeq())) {
+			Integer maxSequence=this.dictionaryDao.getMaxSequence(dict.getTypeCode());
+			if(maxSequence==null) {
+				maxSequence=1;
+			}else {
+				maxSequence++;
+			}
+			dict.setSeq(maxSequence);
+		}
+		
+		Dictionary dictionary=new Dictionary();
+		BeanUtils.copyProperties(dict, dictionary);
+		dictionary.setStatus("VALID");
+		this.dictionaryDao.insert(dictionary);
+		
 	}
 }
