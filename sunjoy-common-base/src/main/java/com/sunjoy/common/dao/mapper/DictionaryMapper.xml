@@ -107,13 +107,13 @@
 	</select>
 	
 	<select id="getMaxItemCode" resultType="java.lang.String">
-		select GREATEST(dic.item_code) as itemCode 
+		select MAX(dic.item_code) as itemCode 
 		from bas.dictionary dic
 		where dic.type_code=#{typeCode}
 	</select>
 	
 	<select id="getMaxSequence" resultType="java.lang.Integer">
-		select GREATEST(dic.seq) as seq 
+		select MAX(dic.seq) as seq 
 		from bas.dictionary dic
 		where dic.type_code=#{typeCode}
 	</select>
