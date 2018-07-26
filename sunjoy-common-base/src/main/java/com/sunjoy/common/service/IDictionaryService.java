@@ -22,5 +22,5 @@ public interface IDictionaryService {
 	 * 增加数据字典项目
 	 * @param dict
 	 */
-	void addDictionary(DictionaryDto dict);
+	Dictionary addDictionary(DictionaryDto dict);
 }

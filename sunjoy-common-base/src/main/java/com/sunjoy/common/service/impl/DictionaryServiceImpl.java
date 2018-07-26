@@ -102,7 +102,7 @@ public class DictionaryServiceImpl implements IDictionaryService{
 	}
 
 	@Override
-	public void addDictionary(DictionaryDto dict) {
+	public Dictionary addDictionary(DictionaryDto dict) {
 		//检验
 		BeanUtils.checkEmptyFields(dict, "typeCode","typeName","itemName");
 		if(BeanUtils.isEmpty(dict.getId())) {
@@ -136,6 +136,6 @@ public class DictionaryServiceImpl implements IDictionaryService{
 		BeanUtils.copyProperties(dict, dictionary);
 		dictionary.setStatus("VALID");
 		this.dictionaryDao.insert(dictionary);
-		
+		return dictionary;
 	}
 }
